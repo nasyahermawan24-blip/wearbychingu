@@ -11,13 +11,17 @@ export default function Home() {
 
       <section
         className="
+        relative
         min-h-screen
         flex
         items-center
         justify-center
+        overflow-hidden
         px-6
         "
       >
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(236,72,153,0.16),_transparent_52%)]" />
+        <div className="pointer-events-none absolute bottom-10 left-1/2 h-40 w-40 -translate-x-1/2 rounded-full bg-pink-500/10 blur-3xl" />
 
         <div
           className="

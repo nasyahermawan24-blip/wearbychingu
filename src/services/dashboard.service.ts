@@ -2,9 +2,7 @@ import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { DashboardData } from "@/types/dashboard";
 
 export async function getDashboardData(): Promise<DashboardData> {
-
-  const supabase =
-    await createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
 
   const [
     products,
@@ -12,7 +10,6 @@ export async function getDashboardData(): Promise<DashboardData> {
     payments,
     customers,
   ] = await Promise.all([
-
     supabase
       .from("products")
       .select("*", {
@@ -36,67 +33,84 @@ export async function getDashboardData(): Promise<DashboardData> {
 
     supabase
       .from("profiles")
-      .select("*", {
+      .select("id", {
         count: "exact",
         head: true,
-      }),
-
+      })
+      .eq("role", "customer"),
   ]);
 
-  const { data: latestOrders } =
-    await supabase
-      .from("orders")
-      .select(`
-        *,
-        profiles (
-          full_name
-        )
-      `)
-      .order("created_at", {
-        ascending: false,
-      })
-      .limit(5);
+  // ==========================
+  // Latest Orders
+  // ==========================
 
-  const { data: latestPayments } =
-    await supabase
-      .from("payments")
-      .select("*")
-      .order("created_at", {
-        ascending: false,
-      })
-      .limit(5);
+  const { data: latestOrdersData } = await supabase
+    .from("orders")
+    .select(`
+      id,
+      status,
+      created_at,
+      user_id
+    `)
+    .order("created_at", {
+      ascending: false,
+    })
+    .limit(5);
 
-  const { data: latestProducts } =
-    await supabase
-      .from("products")
-      .select("*")
-      .order("created_at", {
-        ascending: false,
-      })
-      .limit(5);
+  const latestOrders = await Promise.all(
+    (latestOrdersData ?? []).map(async (order) => {
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("full_name")
+        .eq("id", order.user_id)
+        .maybeSingle();
+
+      return {
+        id: order.id,
+        status: order.status,
+        created_at: order.created_at,
+        profiles: profile,
+      };
+    })
+  );
+
+  // ==========================
+  // Latest Payments
+  // ==========================
+
+  const { data: latestPayments } = await supabase
+    .from("payments")
+    .select("*")
+    .order("created_at", {
+      ascending: false,
+    })
+    .limit(5);
+
+  // ==========================
+  // Latest Products
+  // ==========================
+
+  const { data: latestProducts } = await supabase
+    .from("products")
+    .select("*")
+    .order("created_at", {
+      ascending: false,
+    })
+    .limit(5);
 
   return {
+    products: products.count ?? 0,
 
-    products:
-      products.count ?? 0,
+    orders: orders.count ?? 0,
 
-    orders:
-      orders.count ?? 0,
+    payments: payments.count ?? 0,
 
-    payments:
-      payments.count ?? 0,
+    customers: customers.count ?? 0,
 
-    customers:
-      customers.count ?? 0,
+    latestOrders,
 
-    latestOrders:
-      latestOrders ?? [],
+    latestPayments: latestPayments ?? [],
 
-    latestPayments:
-      latestPayments ?? [],
-
-    latestProducts:
-      latestProducts ?? [],
-
+    latestProducts: latestProducts ?? [],
   };
 }

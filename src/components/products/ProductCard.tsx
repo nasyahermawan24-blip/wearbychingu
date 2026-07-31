@@ -23,6 +23,7 @@ export default function ProductCard({
     <div
       className="
       group
+      relative
       overflow-hidden
       rounded-3xl
       border
@@ -35,6 +36,7 @@ export default function ProductCard({
       hover:shadow-[0_0_35px_rgba(212,20,90,0.35)]
     "
     >
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(236,72,153,0.12),_transparent_55%)]" />
       {/* IMAGE */}
 
       <Link href={`/product/${product.id}`}>

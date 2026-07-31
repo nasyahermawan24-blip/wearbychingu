@@ -1,4 +1,4 @@
-import DownloadTable from "@/components/download/DownloadTable";
+import DownloadTable from "@/components/downloads/DownloadTable";
 
 export default function DownloadsPage() {
   return (

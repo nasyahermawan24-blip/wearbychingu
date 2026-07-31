@@ -13,9 +13,11 @@ export interface Testimonial {
 
   status: string;
 
-  created_at: string;
+  image_url?: string | null;
 
-  updated_at: string;
+  created_at?: string;
+
+  updated_at?: string;
 
   profiles?: {
     full_name: string;

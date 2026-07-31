@@ -68,7 +68,8 @@ export default function Testimonials() {
   }, [search, rating]);
 
   return (
-    <section className="space-y-10">
+    <section className="relative space-y-10 overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(236,72,153,0.16),_transparent_52%)]" />
 
       {/* HERO */}
 
@@ -128,7 +129,8 @@ export default function Testimonials() {
 
       <div className="grid gap-6 md:grid-cols-3">
 
-        <div className="rounded-3xl border border-pink-900/30 bg-zinc-950 p-6">
+        <div className="relative overflow-hidden rounded-3xl border border-pink-900/30 bg-zinc-950 p-6">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(236,72,153,0.08),_transparent_55%)]" />
 
           <p className="text-gray-400">
             Total Review
@@ -140,7 +142,8 @@ export default function Testimonials() {
 
         </div>
 
-        <div className="rounded-3xl border border-pink-900/30 bg-zinc-950 p-6">
+        <div className="relative overflow-hidden rounded-3xl border border-pink-900/30 bg-zinc-950 p-6">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(236,72,153,0.08),_transparent_55%)]" />
 
           <p className="text-gray-400">
             Rating
@@ -159,7 +162,8 @@ export default function Testimonials() {
 
         </div>
 
-        <div className="rounded-3xl border border-pink-900/30 bg-zinc-950 p-6">
+        <div className="relative overflow-hidden rounded-3xl border border-pink-900/30 bg-zinc-950 p-6">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(236,72,153,0.08),_transparent_55%)]" />
 
           <p className="text-gray-400">
             Customer Puas
@@ -243,6 +247,8 @@ export default function Testimonials() {
           <div
             key={item.id}
             className="
+            relative
+            overflow-hidden
             rounded-3xl
             border
             border-pink-900/30
@@ -253,6 +259,7 @@ export default function Testimonials() {
             hover:border-pink-500
             "
           >
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(236,72,153,0.1),_transparent_55%)]" />
 
             <h3 className="text-xl font-bold">
               {item.name}

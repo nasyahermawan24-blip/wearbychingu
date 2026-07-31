@@ -31,7 +31,9 @@ export default function RegisterUI({
   loading,
 }: Props) {
   return (
-    <div className="min-h-screen flex items-center justify-center px-6 bg-transparent">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden px-6 bg-transparent">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(236,72,153,0.18),_transparent_48%)]" />
+      <div className="pointer-events-none absolute bottom-0 left-1/2 h-56 w-56 -translate-x-1/2 rounded-full bg-pink-500/10 blur-3xl" />
       <div
         className="
           w-full

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   ShoppingBag,
   Minus,
@@ -22,6 +23,7 @@ interface Props {
 export default function ProductDetail({
   product,
 }: Props) {
+  const router = useRouter();
 
   const [quantity, setQuantity] = useState(1);
 
@@ -79,18 +81,22 @@ export default function ProductDetail({
 
     <section
       className="
-      max-w-7xl
+      relative
       mx-auto
+      max-w-7xl
+      overflow-hidden
       px-6
       py-16
       "
     >
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(236,72,153,0.16),_transparent_52%)]" />
+      <div className="pointer-events-none absolute right-0 top-16 h-40 w-40 rounded-full bg-pink-500/10 blur-3xl" />
 
 
       {/* BACK BUTTON */}
 
       <Link
-        href="/product"
+        href="/products"
         className="
         inline-flex
         items-center
@@ -429,7 +435,7 @@ export default function ProductDetail({
 
 
             <button
-
+              onClick={() => router.push("/checkout")}
               className="
               flex
               flex-1
@@ -469,39 +475,32 @@ export default function ProductDetail({
 
 
 
-      {/* TESTIMONIAL PLACEHOLDER */}
+      <div className="mt-24 rounded-3xl border border-pink-900/30 bg-black/40 p-10">
 
-      <div
-        className="
-        mt-24
-        rounded-3xl
-        border
-        border-pink-900/30
-        bg-black/40
-        p-10
-        "
-      >
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
 
-        <h2
-          className="
-          text-3xl
-          font-bold
-          "
-        >
+          <div>
 
-          Testimonial Customer
+            <h2 className="text-3xl font-bold">
+              Testimonial Customer
+            </h2>
 
-        </h2>
+            <p className="mt-2 text-gray-400">
+              Baca pengalaman pembeli dan bagikan review Anda setelah produk diterima.
+            </p>
 
+          </div>
 
-        <div
-          className="
-          mt-8
-          rounded-2xl
-          bg-pink-950/20
-          p-6
-          "
-        >
+          <Link
+            href={`/testimonials/new?product=${product.id}`}
+            className="inline-flex items-center justify-center rounded-2xl bg-pink-600 px-5 py-3 text-sm font-bold transition hover:bg-pink-500"
+          >
+            Tulis Review
+          </Link>
+
+        </div>
+
+        <div className="mt-8 rounded-2xl bg-pink-950/20 p-6">
 
           <div className="flex text-yellow-400">
 
@@ -509,16 +508,13 @@ export default function ProductDetail({
 
           </div>
 
-
           <p className="mt-3 text-gray-300">
 
             “Produk sangat bagus dan sesuai dengan deskripsi.”
 
           </p>
 
-
         </div>
-
 
       </div>
 

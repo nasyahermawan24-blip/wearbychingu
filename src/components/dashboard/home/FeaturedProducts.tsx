@@ -196,7 +196,7 @@ export default function FeaturedProducts() {
                 </p>
 
                 <Link
-                  href={`/products/${item.slug}`}
+                  href={`/product/${item.id}`}
                   className="
                   mt-6
                   flex

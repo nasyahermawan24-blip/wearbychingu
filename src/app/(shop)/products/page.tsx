@@ -69,14 +69,18 @@ export default function ProductsPage() {
 
     <section
       className="
+      relative
       mx-auto
       max-w-7xl
+      overflow-hidden
       px-6
       py-14
       "
     >
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(236,72,153,0.14),_transparent_45%)]" />
+      <div className="pointer-events-none absolute bottom-0 left-0 h-40 w-40 rounded-full bg-pink-500/10 blur-3xl" />
 
-      <div className="mb-12">
+      <div className="relative z-10 mb-12">
 
         <h1
           className="

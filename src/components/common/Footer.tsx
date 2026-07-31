@@ -27,7 +27,7 @@ text-gray-400
 
 <p>
 
-© {new Date().getFullYear()} 
+&copy; {new Date().getFullYear()} 
 <span className="
 text-pink-500
 font-semibold
@@ -47,6 +47,4 @@ font-semibold
 
 
 )
-
-
 }

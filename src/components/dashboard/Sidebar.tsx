@@ -14,6 +14,8 @@ import {
   MessageSquare,
   ShieldCheck,
   UserCheck,
+  BarChart3,
+  Users,
 } from "lucide-react";
 
 export default function Sidebar() {
@@ -135,7 +137,9 @@ export default function Sidebar() {
 
         <Link
           href={isAdmin ? "/dashboard/admin" : "/dashboard/customer"}
-          className={menuClass(isAdmin ? "/dashboard/admin" : "/dashboard/customer")}
+          className={menuClass(
+            isAdmin ? "/dashboard/admin" : "/dashboard/customer"
+          )}
         >
           <LayoutDashboard size={20} className="shrink-0" />
           Dashboard Overview
@@ -178,6 +182,30 @@ export default function Sidebar() {
               <CreditCard size={20} className="shrink-0" />
               Payments
             </Link>
+
+            <Link
+              href="/dashboard/admin/customers"
+              className={menuClass("/dashboard/admin/customers")}
+            >
+              <Users size={20} className="shrink-0" />
+              Customers
+            </Link>
+
+            <Link
+              href="/dashboard/admin/testimonials"
+              className={menuClass("/dashboard/admin/testimonials")}
+            >
+              <MessageSquare size={20} className="shrink-0" />
+              Testimonials
+            </Link>
+
+            <Link
+              href="/dashboard/admin/reports"
+              className={menuClass("/dashboard/admin/reports")}
+            >
+              <BarChart3 size={20} className="shrink-0" />
+              Reports
+            </Link>
           </>
         )}
 
@@ -210,7 +238,10 @@ export default function Sidebar() {
               Downloads
             </Link>
 
-            <Link href="/testimonials" className={menuClass("/testimonials")}>
+            <Link
+              href="/testimonials"
+              className={menuClass("/testimonials")}
+            >
               <MessageSquare size={20} className="shrink-0" />
               Testimonials
             </Link>
@@ -218,12 +249,13 @@ export default function Sidebar() {
         )}
       </nav>
 
-      {/* Footer Info inside Sidebar */}
+      {/* Footer */}
       <div className="p-4 border-t border-pink-900/20 bg-black/40">
         <div className="rounded-2xl border border-pink-900/30 bg-pink-950/20 p-3 text-center">
           <p className="text-xs font-semibold text-pink-400">
             Korean Digital Fashion
           </p>
+
           <p className="text-[11px] text-gray-500 mt-0.5">
             WearByChingu v1.0
           </p>
@@ -231,4 +263,4 @@ export default function Sidebar() {
       </div>
     </aside>
   );
-}
+}

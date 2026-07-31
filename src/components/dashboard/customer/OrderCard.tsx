@@ -1,17 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import {
-  Download,
-  CreditCard,
-  Clock,
-  CheckCircle2,
-  AlertCircle,
-  XCircle,
-  ChevronRight,
-  FileText,
-} from "lucide-react";
-
+import { Download, CreditCard, Clock, CheckCircle2, AlertCircle, XCircle, ChevronRight, FileText } from "lucide-react";
 import { OrderWithItems } from "@/types/order";
 
 interface Props {
@@ -30,32 +20,25 @@ export default function OrderCard({ order }: Props) {
       case "completed":
         return {
           label: "Selesai (Siap Unduh)",
-          className:
-            "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30",
+          className: "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30",
           icon: CheckCircle2,
         };
-
       case "processing":
         return {
           label: "Sedang Diproses Admin",
-          className:
-            "bg-blue-500/20 text-blue-400 border border-blue-500/30",
+          className: "bg-blue-500/20 text-blue-400 border border-blue-500/30",
           icon: Clock,
         };
-
       case "cancelled":
         return {
           label: "Dibatalkan",
-          className:
-            "bg-rose-500/20 text-rose-400 border border-rose-500/30",
+          className: "bg-rose-500/20 text-rose-400 border border-rose-500/30",
           icon: XCircle,
         };
-
       default:
         return {
           label: "Menunggu Pembayaran",
-          className:
-            "bg-amber-500/20 text-amber-400 border border-amber-500/30 animate-pulse-subtle",
+          className: "bg-amber-500/20 text-amber-400 border border-amber-500/30 animate-pulse-subtle",
           icon: AlertCircle,
         };
     }
@@ -80,22 +63,16 @@ export default function OrderCard({ order }: Props) {
       hover:shadow-[0_8px_30px_rgba(212,20,90,0.15)]
       "
     >
-      {/* HEADER */}
-
+      {/* Top Bar: Order ID & Status */}
       <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-pink-900/20">
-
         <div className="flex items-center gap-3">
-
           <div className="h-10 w-10 rounded-2xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-400">
             <FileText size={20} />
           </div>
-
           <div>
-
             <h3 className="font-extrabold text-base text-white tracking-wide">
               Order #{order.id}
             </h3>
-
             <p className="text-xs text-gray-400 mt-0.5">
               {order.created_at
                 ? new Date(order.created_at).toLocaleDateString("id-ID", {
@@ -103,11 +80,9 @@ export default function OrderCard({ order }: Props) {
                     month: "long",
                     year: "numeric",
                   })
-                : "-"}
+                : "Tanggal tidak tersedia"}
             </p>
-
           </div>
-
         </div>
 
         <span
@@ -128,99 +103,43 @@ export default function OrderCard({ order }: Props) {
           <StatusIcon size={14} />
           {statusInfo.label}
         </span>
-
       </div>
 
-      {/* LIST PRODUK */}
-
+      {/* Order Items List */}
       <div className="my-5 space-y-3">
-
-        {order.order_items?.map((item) => (
-
+        {order.order_items?.map((item, index) => (
           <div
-            key={item.id}
-            className="rounded-2xl bg-zinc-900/40 border border-pink-900/10 p-4"
+            key={index}
+            className="flex items-center justify-between p-3 rounded-2xl bg-zinc-900/40 border border-pink-900/10"
           >
-
-            <div className="flex justify-between items-center">
-
-              <div>
-
-                <p className="font-bold text-white">
-                  {item.product_name}
-                </p>
-
-                <p className="text-xs text-gray-400 mt-1">
-                  Jumlah {item.quantity} × {formatPrice.format(item.price)}
-                </p>
-
-              </div>
-
-              <p className="font-bold text-pink-400">
-                {formatPrice.format(item.subtotal)}
+            <div>
+              <p className="text-sm font-bold text-white">
+                {item.product_name}
               </p>
-
+              <p className="text-xs text-gray-400 mt-0.5">
+                Jumlah: {item.quantity} × {formatPrice.format(item.price)}
+              </p>
             </div>
-
-            {/* Tombol Testimoni */}
-
-            {order.status === "completed" && (
-
-              <div className="mt-4">
-
-                <Link
-    href={`/testimonials/new?product=${order.order_items?.[0]?.product_id}`}
-    className="
-    inline-flex
-    items-center
-    gap-2
-    rounded-2xl
-    bg-zinc-900
-    border
-    border-pink-500/30
-    px-5
-    py-2.5
-    text-xs
-    font-bold
-    hover:bg-pink-950
-    transition
-    "
->
-
-    Beri Testimoni
-
-</Link>
-
-              </div>
-
-            )}
-
+            <p className="text-sm font-bold text-pink-400">
+              {formatPrice.format(item.subtotal)}
+            </p>
           </div>
-
         ))}
-
       </div>
 
-      {/* FOOTER */}
-
+      {/* Footer: Total & Actions */}
       <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-pink-900/20">
-
         <div>
-
-          <span className="text-xs uppercase tracking-wider text-gray-400">
+          <span className="text-xs uppercase tracking-wider text-gray-400 font-medium">
             Total Pembayaran
           </span>
-
-          <p className="text-2xl font-black text-pink-500 mt-1">
+          <p className="text-2xl font-black text-pink-500 mt-0.5">
             {formatPrice.format(order.total)}
           </p>
-
         </div>
 
-        <div className="flex flex-wrap gap-2">
-
+        <div className="flex flex-wrap gap-2.5">
           {order.status === "completed" && (
-
             <Link
               href="/downloads"
               className="
@@ -236,16 +155,18 @@ export default function OrderCard({ order }: Props) {
               text-xs
               font-bold
               text-white
+              shadow-[0_0_20px_rgba(16,185,129,0.3)]
+              hover:scale-105
+              transition-all
+              duration-300
               "
             >
-              <Download size={15} />
-              Unduh Produk
+              <Download size={16} />
+              Unduh Produk Digital
             </Link>
-
           )}
 
           {order.status === "pending" && (
-
             <Link
               href={`/payment?order=${order.id}`}
               className="
@@ -262,12 +183,15 @@ export default function OrderCard({ order }: Props) {
               text-xs
               font-bold
               text-white
+              shadow-[0_0_20px_rgba(212,20,90,0.3)]
+              hover:scale-105
+              transition-all
+              duration-300
               "
             >
-              <CreditCard size={15} />
-              Upload Bukti
+              <CreditCard size={16} />
+              Upload Bukti Bayar
             </Link>
-
           )}
 
           <Link
@@ -279,23 +203,21 @@ export default function OrderCard({ order }: Props) {
             rounded-2xl
             border
             border-pink-900/40
-            bg-zinc-900
+            bg-zinc-900/80
             px-4
             py-2.5
             text-xs
             font-semibold
             text-gray-300
             hover:text-pink-300
+            hover:border-pink-500/40
+            transition-all
             "
           >
-            Detail
-            <ChevronRight size={14} />
+            Detail <ChevronRight size={14} />
           </Link>
-
         </div>
-
       </div>
-
     </div>
   );
 }
