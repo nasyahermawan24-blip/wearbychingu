@@ -1,6 +1,5 @@
-"use client";
-
 import { supabase } from "@/lib/supabase";
+import { Testimonial } from "@/types/Testimonial";
 
 export async function createTestimonial({
   product_id,
@@ -12,56 +11,87 @@ export async function createTestimonial({
   rating: number;
   comment: string;
   image_url: string;
-}) {
+}): Promise<void> {
   const {
     data: { user },
+    error: userError,
   } = await supabase.auth.getUser();
+
+  if (userError) {
+    throw new Error(userError.message);
+  }
 
   if (!user) {
     throw new Error("User belum login");
   }
 
-  const { error } = await supabase
-    .from("testimonials")
-    .insert({
-      user_id: user.id,
-      product_id,
-      rating,
-      comment,
-      image_url,
-      status: "pending",
-    });
+  const { error } = await supabase.from("testimonials").insert({
+    user_id: user.id,
+    product_id,
+    rating,
+    comment,
+    image_url,
+    status: "pending",
+  });
 
-  if (error) throw error;
+  if (error) {
+    throw new Error(error.message);
+  }
 }
 
-export async function getTestimonials() {
-
+export async function getTestimonials(): Promise<Testimonial[]> {
   const { data, error } = await supabase
     .from("testimonials")
     .select(
-      `id, rating, comment, image_url, profiles ( full_name ), products ( name )`
+      `id, user_id, product_id, rating, comment, status, created_at, updated_at, profiles(full_name), products(id, name, image_url)`
     )
-    .eq("status", "active")
+    .eq("status", "approved")
     .order("id", { ascending: false })
     .limit(6);
 
   if (error) {
-    console.error(error);
-    return [];
+    throw new Error(error.message);
   }
 
-  // Supabase returns related rows as arrays; unwrap to match component shape
-  const mapped = (data || []).map((d: unknown) => {
-    const row = d as { profiles?: unknown[]; products?: unknown[] } & Record<string, unknown>;
+  return (data ?? []).map((row) => {
+    const testimonial = row as Record<string, unknown> & {
+      profiles?: unknown[];
+      products?: unknown[];
+    };
+
+    const profile = Array.isArray(testimonial.profiles) && testimonial.profiles.length
+      ? (testimonial.profiles[0] as { full_name?: string })
+      : null;
+
+    const product = Array.isArray(testimonial.products) && testimonial.products.length
+      ? (testimonial.products[0] as {
+          id?: number;
+          name?: string;
+          image_url?: string;
+        })
+      : null;
 
     return {
-      ...row,
-      profiles: Array.isArray(row.profiles) && row.profiles.length ? row.profiles[0] : null,
-      products: Array.isArray(row.products) && row.products.length ? row.products[0] : null,
-    } as unknown;
+      id: Number(testimonial.id ?? 0),
+      user_id: String(testimonial.user_id ?? ""),
+      product_id: Number(testimonial.product_id ?? 0),
+      rating: Number(testimonial.rating ?? 0),
+      comment: String(testimonial.comment ?? ""),
+      status: String(testimonial.status ?? ""),
+      created_at: String(testimonial.created_at ?? ""),
+      updated_at: String(testimonial.updated_at ?? ""),
+      profiles: profile
+        ? {
+            full_name: profile.full_name ?? "",
+          }
+        : null,
+      products: product
+        ? {
+            id: product.id ?? 0,
+            name: product.name ?? "",
+            image_url: product.image_url ?? "",
+          }
+        : null,
+    } as Testimonial;
   });
-
-  return mapped;
-
 }
