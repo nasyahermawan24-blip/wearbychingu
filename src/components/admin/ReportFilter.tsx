@@ -1,10 +1,10 @@
 "use client";
 
-import { ReportFilter } from "@/types/filter";
+import { ReportFilter as ReportFilterType } from "@/types/filter";
 
 interface Props {
-  value: ReportFilter;
-  onChange: (value: ReportFilter) => void;
+  value: ReportFilterType;
+  onChange: (value: ReportFilterType) => void;
 }
 
 const filters: {
