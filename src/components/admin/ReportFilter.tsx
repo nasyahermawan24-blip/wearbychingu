@@ -9,7 +9,7 @@ interface Props {
 
 const filters: {
   label: string;
-  value: ReportFilter;
+  value: ReportFilterType;
 }[] = [
   {
     label: "Hari Ini",
@@ -35,9 +35,7 @@ export default function ReportFilter({
 }: Props) {
   return (
     <div className="flex flex-wrap gap-3">
-
       {filters.map((item) => (
-
         <button
           key={item.value}
           onClick={() => onChange(item.value)}
@@ -57,9 +55,7 @@ export default function ReportFilter({
         >
           {item.label}
         </button>
-
       ))}
-
     </div>
   );
 }
