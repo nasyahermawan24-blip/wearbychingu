@@ -234,7 +234,7 @@ export default function ProductForm({
               <p className="text-sm text-gray-400 mb-2">
                 Gambar Produk
               </p>
-
+              
               <Image
                 src={imageUrl}
                 alt="Preview"
@@ -246,7 +246,7 @@ export default function ProductForm({
                 object-cover
                 "
               />
-
+              
             </div>
 
           )}

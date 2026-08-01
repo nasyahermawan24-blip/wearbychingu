@@ -293,92 +293,104 @@ export default function ProductTable() {
 
       {showForm && (
 
-        <div
-          className="
-          fixed
-          inset-0
-          z-50
-          flex
-          items-center
-          justify-center
-          bg-black/70
-          p-8
-          "
-        >
+  <div
+    className="
+    fixed
+    inset-0
+    z-50
+    flex
+    items-center
+    justify-center
+    bg-black/70
+    px-4
+    py-6
+    overflow-y-auto
+    "
+  >
 
-          <div
-            className="
-            w-full
-            max-w-3xl
-            "
-          >
+    <div
+      className="
+      w-full
+      max-w-xl
+      max-h-[90vh]
+      overflow-y-auto
+      rounded-3xl
+      "
+    >
 
-            <ProductForm
-              onSuccess={async () => {
-                setShowForm(false);
-                await loadProducts();
-              }}
-            />
+      <ProductForm
+        onSuccess={async () => {
+          setShowForm(false);
+          await loadProducts();
+        }}
+      />
 
-            <button
-              onClick={() =>
-                setShowForm(false)
-              }
-              className="
-              mt-6
-              w-full
-              rounded-xl
-              bg-zinc-800
-              py-3
-              "
-            >
-              Tutup
-            </button>
+      <button
+        onClick={() =>
+          setShowForm(false)
+        }
+        className="
+        mt-6
+        w-full
+        rounded-xl
+        bg-zinc-800
+        py-3
+        hover:bg-zinc-700
+        transition
+        "
+      >
+        Tutup
+      </button>
 
-          </div>
+    </div>
 
-        </div>
+  </div>
 
-      )}
+)}
 
-      {editingProduct && (
+   {editingProduct && (
 
-        <div
-          className="
-          fixed
-          inset-0
-          z-50
-          flex
-          items-center
-          justify-center
-          bg-black/70
-          p-8
-          "
-        >
+  <div
+    className="
+    fixed
+    inset-0
+    z-50
+    flex
+    items-center
+    justify-center
+    bg-black/70
+    px-4
+    py-6
+    overflow-y-auto
+    "
+  >
 
-          <div
-            className="
-            w-full
-            max-w-3xl
-            "
-          >
+    <div
+      className="
+      w-full
+      max-w-xl
+      max-h-[90vh]
+      overflow-y-auto
+      rounded-3xl
+      "
+    >
 
-            <EditProductModal
-              product={editingProduct}
-              onClose={() =>
-                setEditingProduct(null)
-              }
-              onSuccess={async () => {
-                setEditingProduct(null);
-                await loadProducts();
-              }}
-            />
+      <EditProductModal
+        product={editingProduct}
+        onClose={() =>
+          setEditingProduct(null)
+        }
+        onSuccess={async () => {
+          setEditingProduct(null);
+          await loadProducts();
+        }}
+      />
 
-          </div>
+    </div>
 
-        </div>
+  </div>
 
-      )}
+)}
 
     </>
 
