@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import {
+
   LayoutDashboard,
   Package,
   FolderTree,
@@ -15,7 +16,7 @@ import {
   ShieldCheck,
   UserCheck,
   BarChart3,
-  Users,
+
 } from "lucide-react";
 
 export default function Sidebar() {
@@ -181,14 +182,6 @@ export default function Sidebar() {
             >
               <CreditCard size={20} className="shrink-0" />
               Payments
-            </Link>
-
-            <Link
-              href="/dashboard/admin/customers"
-              className={menuClass("/dashboard/admin/customers")}
-            >
-              <Users size={20} className="shrink-0" />
-              Customers
             </Link>
 
             <Link
